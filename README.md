@@ -2,16 +2,20 @@
 
 ## 1.Real-world experiment
 ### Real-world demonstraion:
-We provide more video demonstraion on the manipulation process in the link.
+We provide more video demonstraion on the manipulation process.
 ### Comparisons with point cloud:
-To substantiate our findings, we offer additional qualitative evidence within a real-world setting. 
-All experiment specifics align with the details in main paper, serving to illustrate the limitations of point clouds. 
-As illustrated in [xxx], it becomes evident that point clouds exhibit notable limitations when confronted with specular or transparent objects (such as the pan and kettle). For example, owing to its intrinsic nature, the object (faucet) comprises sparse points, introducing complexities in both perception and manipulation.
-Take the pan as an illustration – although the lid is transparent, the handle is not, and the transparent component still affects the overall image, intensifying the difficulties in perception and manipulation. 
-In constract, cost-effective RGB imsgaes exhibit dense pixel-wise information to capture specular and transparent object.Therefore, our motivation is to provide a potential solution of RGB-only manipulation framework, which has its own strength in industrial applications.
+<p>To substantiate our findings, we offer additional qualitative evidence within real-world setting. 
+All experiment specifics align with the details in main paper, aiming to illustrate the limitations of point clouds. 
+As illustrated in [xxx], it becomes evident that point clouds exhibit notable limitations when confronted with specular or transparent objects (such as the pan and kettle). For example, due to its intrinsic nature, the faucet comprises sparse points, introducing complexities in both perception and manipulation.
+Take the pan as a further illustration – although the lid is transparent, the handle is not, and the transparent component still affects the overall imaging, intensifying the difficulties in perception and manipulation. 
+In constract, cost-effective RGB images exhibit dense pixel-wise information to capture specular and transparent object. Therefore, our motivation for this paper is to provide a potential solution of RGB-only manipulation framework, which has its own strength in industrial applications. Though such modality lacks geometry details, we complement by predicting depth to formulate object geometric structure. </p>
+<img src="https://github.com/clorislili/imagemanip/blob/main/images/real_pc.png" alt="GitHub Logo" width="500" height="400">
+
 
 ## 2. Token-wise correspondence
-We show the visualization of the comparisons of pixel-wise and token-wise correspondenece. Pixel-wise correspondence is obtain with initial depth prediction, which may contain inaccuracy to lead error accumulation. In the following figure, we can see the misalignment circumstance in pixel-wise correspondence. To address such, we introduce token-wise correspondence which find the correspondence of tokens in high-dimensional feature, in which one token aggregate the feature of 64x64 pixels. We visualize the token-wise corresponce and only fuse correspondent tokens. By doing so, we ensure that the fused tokens have the same semantic representation, and alleviate the impact of inaccurate depth prediction
+<p>We show the visualization of the comparisons of pixel-wise and token-wise correspondenece. Pixel-wise correspondence is obtain with initial depth prediction, which may contain inaccuracy to lead error accumulation. In the top part of the following figure, we can see the misalignment circumstance in pixel-wise correspondence. To address such, we introduce token-wise correspondence which find the correspondence of tokens in high-dimensional feature, in which one token aggregate the feature of 64x64 pixels. It thus is more robust to depth inaccuracy since it does not require accurate pixel-level alignment. We visualize the token-wise corresponce at the bottom part of the figure and only fuse correspondent tokens. By doing so, we ensure that the fused tokens have the same semantic representation, and thus alleviate the impact of inaccurate depth prediction.</p>
+<img src="https://github.com/clorislili/imagemanip/blob/main/images/correspondence.png" alt="GitHub Logo" width="800" height="300">
+
 
 ## 3. More ablation study on the view selection module
 
@@ -22,14 +26,15 @@ It becomes apparent that a greater number of candidate regions did not result in
 The growth in candidates didn't lead to a corresponding increasement in information brought by different views.
 
 ### Candidate scope: 
-We analysis the impact of the range of whole potential scope by expanding the predefined distance range to (1.0 units to 5.0 units) and azimuth angle range to (40 degrees) while subdividing the potential space into nine candidate regions to place camera.
+<p>We analysis the impact of the range of whole potential scope by expanding the predefined distance range to (1.0 units to 5.0 units) and azimuth angle range to (40 degrees) while subdividing the potential space into nine candidate regions to place camera.
 Comparing to smaller scope, this experiment reveals a slight performance decrease, from 0.73 to 0.71. 
 Since enlarging the predefined space will widen the range for each candidate space, it potentially introduces more ambiguity when positioning the camera in the broader candidate area. 
-Meanwhile, we adopt random next view selection here, which achieves more performance drop to 0.5. Since in more broad 3D space, randomly placing can not ensure capturing valuable view for manipulation prediction.
-This shows the important of our best next view selection strategy.
+Meanwhile, we adopt random next view selection here, which achieves more performance drop to 0.5. As shown in the following figure, since in more broad 3D space, the views show great difference. Therefore, randomly placing can not ensure capturing valuable view for manipulation prediction .
+This shows the important of our best next view selection strategy, especially in large scope.
 Meanwhile, when we reduce the potential space (2.5 units and 10 degrees) and generate the nine candidate regions, the performance dropped to 0.66. 
-This suggests that a smaller potential scope might not encompass sufficiently informative views to complement the global perspective. 
-Thus, striking a balance in the candidate space's scope is crucial.
+This suggests that a smaller potential scope might not encompass sufficiently informative views to complement the global perspective since views are too similar, and the optimal view can easily lied out of the scope. 
+Thus, striking a balance in the candidate space's scope is crucial.</p>
+<img src="https://github.com/clorislili/imagemanip/blob/main/images/large_scope.png" alt="GitHub Logo" width="800" height="180">
 
 ### Upper bound: 
 Given the case of 9 camera pose candidates, we establish an upper bound for the view selection module. 
@@ -40,9 +45,16 @@ Also, in section IV.C 'with random next view', we provide the lower limit of thi
 By comparing with the upper and lower bound, our view selection module shows its effectiveness in selecting informative views by yielding an accuracy of 0.73.
 
 ### Visulization of view selection module:
+We show the improvement of refined affordance prediction compared to the initial affordance prediction.
+<img src="https://github.com/clorislili/imagemanip/blob/main/images/next_view.png" alt="GitHub Logo" width="800" height="400">
+<p>We further demonstrate the refined affordance prediction given nine candidates. Different candidates generate different refined affordance prediction, showing the necessarity of applying view selection module.</p>
+<img src="https://github.com/clorislili/imagemanip/blob/main/images/view_selection.png" alt="GitHub Logo" width="800" height="300">
+
 
 ## 4.Domain randomization:
 The randomization in object material and lighting is shown in the following. By doing so, we aim to easy the process of sim to real transfer since real-world usually contains diverse scenatios.
+<img src="https://github.com/clorislili/imagemanip/blob/main/images/material.png" alt="GitHub Logo" width="800" height="200">
+
 
 
 
